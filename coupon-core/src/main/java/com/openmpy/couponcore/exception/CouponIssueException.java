@@ -15,6 +15,6 @@ public class CouponIssueException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        return "[$s] %s".formatted(errorCode, message);
+        return "[%s] %s".formatted(errorCode, message);
     }
 }

@@ -7,10 +7,10 @@ CREATE TABLE `coupon`.`coupons`
     `issued_quantity`      INT          NOT NULL COMMENT '발급된 쿠폰 수량',
     `discount_amount`      INT          NOT NULL COMMENT '할인 금액',
     `min_available_amount` INT          NOT NULL COMMENT '최소 사용 금액',
-    `data_issue_start`     datetime(6)  NOT NULL COMMENT '발급 시작 일시',
-    `data_issue_end`       datetime(6)  NOT NULL COMMENT '발급 종료 일시',
-    `data_created`         datetime(6)  NOT NULL COMMENT '생성 일시',
-    `data_updated`         datetime(6)  NOT NULL COMMENT '수정 일시',
+    `date_issued_start`    datetime(6)  NOT NULL COMMENT '발급 시작 일시',
+    `date_issued_end`      datetime(6)  NOT NULL COMMENT '발급 종료 일시',
+    `date_created`         datetime(6)  NOT NULL COMMENT '생성 일시',
+    `date_updated`         datetime(6)  NOT NULL COMMENT '수정 일시',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -22,10 +22,10 @@ CREATE TABLE `coupon`.`coupon_issues`
     `coupon_id`    BIGINT(20)  NOT NULL COMMENT '쿠폰 ID',
     `user_id`      BIGINT(20)  NOT NULL COMMENT '유저 ID',
     `date_issued`  datetime(6) NOT NULL COMMENT '발급 일시',
-    `date_used`    datetime(6) NOT NULL COMMENT '사용 일시',
+    `date_used`    datetime(6) NULL COMMENT '사용 일시',
     `date_created` datetime(6) NOT NULL COMMENT '생성 일시',
     `date_updated` datetime(6) NOT NULL COMMENT '수정 일시',
-    PRIMARY KEY ('id')
+    PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
     COMMENT '쿠폰 발급 내역';
