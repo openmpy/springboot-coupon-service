@@ -7,6 +7,7 @@ repositories {
 }
 
 dependencies {
+    implementation("com.github.ben-manes.caffeine:caffeine")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
     implementation("com.fasterxml.jackson.core:jackson-databind")
     implementation("org.springframework.boot:spring-boot-starter")

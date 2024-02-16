@@ -1,6 +1,5 @@
 package com.openmpy.couponcore.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openmpy.couponcore.repository.redis.RedisRepository;
 import com.openmpy.couponcore.repository.redis.dto.CouponRedisEntity;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +11,9 @@ public class AsyncCouponIssueServiceV2 {
 
     private final RedisRepository redisRepository;
     private final CouponCacheService couponCacheService;
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public void issue(long couponId, long userId) {
-        CouponRedisEntity coupon = couponCacheService.getCouponCache(couponId);
+        CouponRedisEntity coupon = couponCacheService.getCouponLocalCache(couponId);
         coupon.checkIssuableCoupon();
         issueRequest(couponId, userId, coupon.totalQuantity());
     }

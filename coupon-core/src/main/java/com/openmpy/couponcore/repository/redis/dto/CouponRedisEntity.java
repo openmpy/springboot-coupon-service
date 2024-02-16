@@ -11,11 +11,13 @@ import com.openmpy.couponcore.model.CouponType;
 import java.time.LocalDateTime;
 
 import static com.openmpy.couponcore.exception.ErrorCode.INVALID_COUPON_ISSUE_DATE;
+import static com.openmpy.couponcore.exception.ErrorCode.INVALID_COUPON_ISSUE_QUANTITY;
 
 public record CouponRedisEntity(
         Long id,
         CouponType couponType,
         Integer totalQuantity,
+        boolean availableIssueQuantity,
 
         @JsonSerialize(using = LocalDateTimeSerializer.class)
         @JsonDeserialize(using = LocalDateTimeDeserializer.class)
@@ -30,6 +32,7 @@ public record CouponRedisEntity(
                 coupon.getId(),
                 coupon.getCouponType(),
                 coupon.getTotalQuantity(),
+                coupon.availableIssueQuantity(),
                 coupon.getDateIssuedStart(),
                 coupon.getDateIssuedEnd()
         );
@@ -41,6 +44,11 @@ public record CouponRedisEntity(
     }
 
     public void checkIssuableCoupon() {
+        if (!availableIssueQuantity) {
+            throw new CouponIssueException(INVALID_COUPON_ISSUE_QUANTITY,
+                    "모든 발급 수량이 소진되었습니다. couponId: %s".formatted(id));
+        }
+
         if (!availableIssueDate()) {
             throw new CouponIssueException(INVALID_COUPON_ISSUE_DATE,
                     "발급 가능한 일자가 아닙니다. couponId: %s, issueStart: %s, issueEnd: %s".formatted(id, dateIssuedStart, dateIssuedEnd));
